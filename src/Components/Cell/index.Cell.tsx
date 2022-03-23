@@ -1,9 +1,11 @@
-import * as S from "Components/Cell/style.Cell";
-import * as C from "Constants/index";
 import React from "react";
 
+import * as S from "Components/Cell/style.Cell";
+import * as C from "Constants/index";
+import * as T from "Types/index";
+
 type CellProps = {
-  type: keyof typeof C.TETROMINOS;
+  type: T.Tetrominos;
 };
 
 const Cell = ({ type }: CellProps): JSX.Element => (

@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import * as C from "Constants/index";
+
+import * as T from "Types/index";
 
 type CellProps = {
-  type: keyof typeof C.TETROMINOS;
+  type: T.Tetrominos;
 };
 
 export const Container = styled.div<CellProps>`

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import GlobalStyle from "Styles/Global";
 
-import App from "src/Pages/App/index";
+import App from "Pages/index";
 
 ReactDOM.render(
   <React.StrictMode>

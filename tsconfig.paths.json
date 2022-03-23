@@ -5,7 +5,7 @@
       "Components": ["src/Components/*"],
       "Constants/*": ["src/Constants/*"],
       "Modules/*": ["src/Modules/*"],
-      "Pages/*": ["src/Pages"],
+      "Pages/*": ["src/Pages/*"],
       "Styles/*": ["src/Styles/*"],
       "Types/*": ["src/Types/*"],
       "Utils/*": ["src/Utils/*"],

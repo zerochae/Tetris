@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "Components": ["src/Components/*"],
+      "Constants/*": ["src/Constants/*"],
+      "Modules/*": ["src/Modules/*"],
+      "Pages/*": ["src/Pages"],
+      "Styles/*": ["src/Styles/*"],
+      "Types/*": ["src/Types/*"],
+      "Utils/*": ["src/Utils/*"],
+      "Actions/*": ["src/Modules/Actions/*"],
+      "Reducers/*": ["src/Modules/Reducers/*"]
+    }
+  }
+}

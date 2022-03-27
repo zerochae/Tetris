@@ -25,6 +25,11 @@ const App = (): JSX.Element => {
     }
   };
 
+  const dropBlock = () => {
+    setDropTime(100000);
+    // setDropTime(1000);
+  };
+
   const keyUp = ({ keyCode }: { keyCode: number }): void => {
     if (!gameOver) {
       if (keyCode === 40) {
@@ -61,6 +66,8 @@ const App = (): JSX.Element => {
         setDropTime(30);
       } else if (keyCode === 38) {
         playerRotate(stage);
+      } else if (keyCode === 32) {
+        dropBlock();
       }
     }
   };

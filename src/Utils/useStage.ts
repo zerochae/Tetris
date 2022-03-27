@@ -15,7 +15,7 @@ const useStage = (player: T.Player, resetPlayer: () => void) => {
     const sweepRows = (newStage: T.Stage_H): T.Stage_H => {
       return newStage.reduce((ack, row) => {
         if (row.findIndex((cell) => cell[0] === 0) === -1) {
-          setRowsCleared((prev) => prev + 1);
+          setRowsCleared((prev) => Math.round((prev + 1) / 2));
           ack.unshift(
             new Array(newStage[0].length).fill([0, "clear"]) as T.StageCell_H[]
           );

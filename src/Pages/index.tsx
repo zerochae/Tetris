@@ -15,7 +15,9 @@ const App = (): JSX.Element => {
   const gameArea = useRef<HTMLDivElement>(null);
 
   const { player, updatePlayerPos, resetPlayer, playerRotate } = H.usePlayer();
-  const { stage, setStage } = H.useStage(player, resetPlayer);
+  const { stage, setStage, rowsCleared } = H.useStage(player, resetPlayer);
+  const { score, setScore, rows, setRows, level, setLevel } =
+    H.useGameStatus(rowsCleared);
 
   const movePlayer = (dir: number) => {
     if (!C.isColliding(player, stage, { x: dir, y: 0 })) {
@@ -23,12 +25,10 @@ const App = (): JSX.Element => {
     }
   };
 
-  console.log(player)
-
   const keyUp = ({ keyCode }: { keyCode: number }): void => {
     if (!gameOver) {
       if (keyCode === 40) {
-        setDropTime(1000);
+        setDropTime(1000 / level + 200);
       }
     }
   };
@@ -38,10 +38,19 @@ const App = (): JSX.Element => {
     setStage(C.createStage());
     setDropTime(1000);
     resetPlayer();
+    setScore(0);
+    setLevel(1);
+    setRows(0);
     setGameOver(false);
   };
 
-  const move = ({ keyCode, repeat }: { keyCode: number; repeat: boolean }): void => {
+  const move = ({
+    keyCode,
+    repeat,
+  }: {
+    keyCode: number;
+    repeat: boolean;
+  }): void => {
     if (!gameOver) {
       if (keyCode === 37) {
         movePlayer(-1);
@@ -57,6 +66,11 @@ const App = (): JSX.Element => {
   };
 
   const drop = (): void => {
+    if (rows > level * 10) {
+      setLevel((prev) => prev + 1);
+      setDropTime(1000 / level + 200);
+    }
+
     if (!C.isColliding(player, stage, { x: 0, y: 1 })) {
       updatePlayerPos({ x: 0, y: 1, collided: false });
     } else {
@@ -90,9 +104,9 @@ const App = (): JSX.Element => {
             </>
           ) : (
             <>
-              <Display text={`Score: `} />
-              <Display text={`Rows: `} />
-              <Display text={`Level: `} />
+              <Display text={`Score: ${score}`} />
+              <Display text={`Rows: ${rows}`} />
+              <Display text={`Level: ${level}`} />
             </>
           )}
         </S.Inner>

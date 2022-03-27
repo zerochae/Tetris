@@ -7,7 +7,6 @@ type DisplayProps = {
 export const Container = styled.div<DisplayProps>`
   box-sizing: border-box;
   display: flex;
-  /* justify-content: space-between; */
   align-items: space-between;
   margin: 0 0 20px 0;
   padding: 20px;

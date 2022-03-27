@@ -14,3 +14,6 @@ export type Player = {
   tetromino: (string | number)[][];
   collided: boolean;
 };
+
+export type StageCell_H = [string | number, string];
+export type Stage_H = StageCell_H[][];

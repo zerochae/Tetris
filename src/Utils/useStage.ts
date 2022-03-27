@@ -5,20 +5,36 @@ import { useEffect, useState } from "react";
 
 const useStage = (player: T.Player, resetPlayer: () => void) => {
   const [stage, setStage] = useState(C.createStage());
-
-  type StageCell = [string | number, string];
-  type Stage = StageCell[][];
+  const [rowsCleared, setRowsCleared] = useState(0);
 
   useEffect(() => {
     if (!player.pos) return;
 
-    const updateStage = (prevStage: Stage): Stage => {
+    setRowsCleared(0);
+
+    const sweepRows = (newStage: T.Stage_H): T.Stage_H => {
+      return newStage.reduce((ack, row) => {
+        if (row.findIndex((cell) => cell[0] === 0) === -1) {
+          setRowsCleared((prev) => prev + 1);
+          ack.unshift(
+            new Array(newStage[0].length).fill([0, "clear"]) as T.StageCell_H[]
+          );
+          return ack;
+        }
+
+        ack.push(row);
+        return ack;
+      }, [] as T.Stage_H);
+    };
+
+    const updateStage = (prevStage: T.Stage_H): T.Stage_H => {
       const newStage = prevStage.map(
         (row) =>
           row.map((cell) =>
             cell[1] === "clear" ? [0, "clear"] : cell
-          ) as StageCell[]
+          ) as T.StageCell_H[]
       );
+
       player.tetromino.forEach((row, y) => {
         row.forEach((value, x) => {
           if (value !== 0) {
@@ -29,13 +45,19 @@ const useStage = (player: T.Player, resetPlayer: () => void) => {
           }
         });
       });
+
+      if (player.collided) {
+        resetPlayer();
+        return sweepRows(newStage);
+      }
+
       return newStage;
     };
 
     setStage((prev) => updateStage(prev));
   }, [player.collided, player.pos?.x, player.pos?.y, player.tetromino]);
 
-  return { stage, setStage };
+  return { stage, setStage, rowsCleared };
 };
 
 export default useStage;

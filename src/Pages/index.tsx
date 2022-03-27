@@ -14,16 +14,22 @@ const App = (): JSX.Element => {
 
   const gameArea = useRef<HTMLDivElement>(null);
 
-  const { player, updatePlayerPos, resetPlayer } = H.usePlayer();
+  const { player, updatePlayerPos, resetPlayer, playerRotate } = H.usePlayer();
   const { stage, setStage } = H.useStage(player, resetPlayer);
 
   const movePlayer = (dir: number) => {
-    updatePlayerPos({ x: dir, y: 0, collided: false });
+    if (!C.isColliding(player, stage, { x: dir, y: 0 })) {
+      updatePlayerPos({ x: dir, y: 0, collided: false });
+    }
   };
 
+  console.log(player)
+
   const keyUp = ({ keyCode }: { keyCode: number }): void => {
-    if (keyCode === 40) {
-      setDropTime(1000);
+    if (!gameOver) {
+      if (keyCode === 40) {
+        setDropTime(1000);
+      }
     }
   };
 
@@ -35,26 +41,32 @@ const App = (): JSX.Element => {
     setGameOver(false);
   };
 
-  const move = ({
-    keyCode,
-    repeat,
-  }: {
-    keyCode: number;
-    repeat: boolean;
-  }): void => {
-    if (keyCode === 37) {
-      movePlayer(-1);
-    } else if (keyCode === 39) {
-      movePlayer(1);
-    } else if (keyCode === 40) {
-      if (repeat) return;
-      setDropTime(30);
-    } else if (keyCode === 38) {
+  const move = ({ keyCode, repeat }: { keyCode: number; repeat: boolean }): void => {
+    if (!gameOver) {
+      if (keyCode === 37) {
+        movePlayer(-1);
+      } else if (keyCode === 39) {
+        movePlayer(1);
+      } else if (keyCode === 40) {
+        if (repeat) return;
+        setDropTime(30);
+      } else if (keyCode === 38) {
+        playerRotate(stage);
+      }
     }
   };
 
   const drop = (): void => {
-    updatePlayerPos({ x: 0, y: 1, collided: false });
+    if (!C.isColliding(player, stage, { x: 0, y: 1 })) {
+      updatePlayerPos({ x: 0, y: 1, collided: false });
+    } else {
+      if (player.pos.y < 1) {
+        console.log("game over");
+        setGameOver(true);
+        setDropTime(null);
+      }
+      updatePlayerPos({ x: 0, y: 0, collided: true });
+    }
   };
 
   H.useInterval(() => {
@@ -65,7 +77,7 @@ const App = (): JSX.Element => {
     <S.Container
       role={"button"}
       tabIndex={0}
-      onKeyDown={(e) => move(e)}
+      onKeyDown={move}
       onKeyUp={keyUp}
       ref={gameArea}
     >

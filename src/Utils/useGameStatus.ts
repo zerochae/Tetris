@@ -13,7 +13,7 @@ const useGameStatus = (rowsCleared: number) => {
       setScore((prev) => prev + C.ROWPOINTS[rowsCleared - 1] * level);
       setRows((prev) => prev + rowsCleared);
     }
-  }, [rowsCleared]);
+  }, [rowsCleared,level]);
 
   return { score, setScore, rows, setRows, level, setLevel };
 };

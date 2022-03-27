@@ -55,7 +55,14 @@ const useStage = (player: T.Player, resetPlayer: () => void) => {
     };
 
     setStage((prev) => updateStage(prev));
-  }, [player.collided, player.pos?.x, player.pos?.y, player.tetromino]);
+  }, [
+    player.collided,
+    player.pos?.x,
+    player.pos?.y,
+    player.tetromino,
+    player.pos,
+    resetPlayer,
+  ]);
 
   return { stage, setStage, rowsCleared };
 };

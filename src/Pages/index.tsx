@@ -25,10 +25,7 @@ const App = (): JSX.Element => {
     }
   };
 
-  const dropBlock = () => {
-    setDropTime(100000);
-    // setDropTime(1000);
-  };
+  const dropBlock = () => {};
 
   const keyUp = ({ keyCode }: { keyCode: number }): void => {
     if (!gameOver) {
@@ -57,7 +54,9 @@ const App = (): JSX.Element => {
     repeat: boolean;
   }): void => {
     if (!gameOver) {
-      if (keyCode === 37) {
+      if (keyCode === 32) {
+        dropBlock();
+      } else if (keyCode === 37) {
         movePlayer(-1);
       } else if (keyCode === 39) {
         movePlayer(1);
@@ -66,8 +65,6 @@ const App = (): JSX.Element => {
         setDropTime(30);
       } else if (keyCode === 38) {
         playerRotate(stage);
-      } else if (keyCode === 32) {
-        dropBlock();
       }
     }
   };

@@ -7,15 +7,7 @@ export const createStage = () =>
   );
 
 export const randomTetromino = () => {
-  const tetrominos = [
-    "I",
-    "J",
-    "L",
-    "O",
-    "S",
-    "T",
-    "Z",
-  ] as (T.Tetrominos)[];
+  const tetrominos = ["I", "J", "L", "O", "S", "T", "Z", "A","B","C","SI"] as T.Tetrominos[];
 
   const randTetromino =
     tetrominos[Math.floor(Math.random() * tetrominos.length)];
@@ -27,8 +19,8 @@ export const isColliding = (
   stage: T.Stage_H,
   { x: moveX, y: moveY }: { x: number; y: number }
 ) => {
-  for (let y = 0; y < player.tetromino.length; y ++) {
-    for (let x = 0; x < player.tetromino[y].length; x ++) {
+  for (let y = 0; y < player.tetromino.length; y++) {
+    for (let x = 0; x < player.tetromino[y].length; x++) {
       if (player.tetromino[y][x] !== 0) {
         if (
           !stage[y + player.pos.y + moveY] ||

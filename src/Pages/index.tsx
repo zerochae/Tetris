@@ -25,7 +25,13 @@ const App = (): JSX.Element => {
     }
   };
 
-  const dropBlock = () => {};
+  const dropBlock = () => {
+    let count = 0;
+    while (!C.isColliding(player, stage, { x: 0, y: count })) {
+      count++;
+    }
+    updatePlayerPos({ x: 0, y: count - 1, collided: true });
+  };
 
   const keyUp = ({ keyCode }: { keyCode: number }): void => {
     if (!gameOver) {

@@ -9,11 +9,14 @@ const useGameStatus = (rowsCleared: number) => {
 
   useEffect(() => {
     if (rowsCleared > 0) {
-
-      setScore((prev) => prev + C.ROWPOINTS[rowsCleared - 1] * level);
+      setScore((prev) =>
+        prev + C.ROWPOINTS[rowsCleared - 1] === NaN
+          ? 1200
+          : C.ROWPOINTS[rowsCleared - 1] * level
+      );
       setRows((prev) => prev + rowsCleared);
     }
-  }, [rowsCleared,level]);
+  }, [rowsCleared, level]);
 
   return { score, setScore, rows, setRows, level, setLevel };
 };

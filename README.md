@@ -42,3 +42,10 @@
 - 2022-03-30 
   - Hard Drop 기능 추가
   - 점수 계산 오류 임시 수정
+
+## 참고 영상
+
+[React Tetris with Typescript - Build Tetris with typescript - Typescript Tetris](https://www.youtube.com/watch?v=jEjj2jvHpv4)
+
+  - 위 영상을 참고하여 만들었습니다.
+  - 하드드랍(스페이스 키) 기능, 스페셜블록을 추가하였습니다.

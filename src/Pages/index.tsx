@@ -25,12 +25,10 @@ const App = (): JSX.Element => {
     }
   };
 
-  const dropBlock = () => {
-    let count = 0;
-    while (!C.isColliding(player, stage, { x: 0, y: count })) {
-      count++;
-    }
-    updatePlayerPos({ x: 0, y: count - 1, collided: true });
+  const dropBlock = (count: number) => {
+    !C.isColliding(player, stage, { x: 0, y: count })
+      ? dropBlock(count + 1)
+      : updatePlayerPos({ x: 0, y: count - 1, collided: true });
   };
 
   const keyUp = ({ keyCode }: { keyCode: number }): void => {
@@ -61,7 +59,7 @@ const App = (): JSX.Element => {
   }): void => {
     if (!gameOver) {
       if (keyCode === 32) {
-        dropBlock();
+        dropBlock(0);
       } else if (keyCode === 37) {
         movePlayer(-1);
       } else if (keyCode === 39) {
